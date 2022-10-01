@@ -1,62 +1,132 @@
 /* lista de productos */
-const productos = [
-    {nombre: "top", precio: 2500},
-    {nombre: "remera dama", precio: 2250},
-    {nombre: "remera hombre", precio: 2300},
+let stockProductos = [
+    {id: 1, nombre: "Peeling", tipo: "Peeling", cantidad: 1, desc: "Exfoliación de las capas más superficiales de la piel para favorecer su sustitución por otras de mejor calidad y textura. Se induce así la creación de nuevas capas de la dermis y la epidermis.", precio: 2200, img: './img/peeling.jpg'},
+    {id: 2, nombre: "Limpieza facial con aparatología", tipo: "Limpieza", cantidad: 1, desc: "Limpieza profunda con hidratación en la que se utiliza la radiofrecuencia facial más avanzada. Se aplican tres exfoliantes distintos, un serum, una mascarilla y se finaliza con un crema facial.", precio: 2500, img: './img/limpiezafacial_aparato.webp'},
+    {id: 3, nombre: "Radiofrecuencia", tipo: "Aparatologia", cantidad: 1, desc: "Técnica de medicina estética dirigida a tratar la laxitud de la piel, produce un efecto similar al lifting pero sin cirugía. Es un procedimiento adecuado para pacientes con flacidez leve o moderada de los tejidos faciales.", precio: 2100, img: './img/radiofrec.jpg'},
+    {id: 4, nombre: "Microdermoabrasion", tipo: "Peeling", cantidad: 1, desc: "Tratamiento de medicina estética que consiste en aplicar unos granos diminutos que consiguen exfoliar y eliminar las células muertas de la piel. Esto hace que la piel se renueve y aparezca una nueva más bella, cuidada y saneada.", precio: 2500, img: './img/microdermoabrasion.jpg'},
+    {id: 5, nombre: "Masajes reductores", tipo: "Masajes", cantidad: 1, desc: "Método para combatir y eliminar la acumulación de grasa de una zona localizada del cuerpo, como glúteos o abdomen. Además, favorece la expulsión de toxinas, beneficia el flujo sanguíneo y mejora el sistema digesitvo, entre otras ventajas.", precio: 3200, img: './img/masajesreductores.jpg'},
+    {id: 6, nombre: "Lifting de pestañas", tipo: "Pestañas", cantidad: 1, desc: "Tratamiento que alarga y crea una ligera curva hacia arriba de manera natural y duradera, consiguiendo mayor longitud y espesor.", precio: 3500, img: './img/rostro_flores.webp'},
+    {id: 6, nombre: "Limpieza facial profunda", tipo: "Limpieza", cantidad: 1, desc: "Oxigena tu piel, retrasa la aparición de arrugas, piel más luminosa, elimina y previene el acné y los puntos negros", precio: 2100, img: './img/limpieza_facial.webp'},
 ];
+
+const contenedorProductos = document.getElementById('contenedor-productos')
+
+const contenedorCarrito = document.getElementById('carrito-contenedor')
+
+const botonVaciar = document.getElementById('vaciar-carrito')
+
+const contadorCarrito = document.getElementById('contadorCarrito')
+
+const cantidad = document.getElementById('cantidad')
+
+const precioTotal = document.getElementById('precioTotal')
+
+const cantidadTotal = document.getElementById('cantidadTotal')
 
 let carrito = []
 
-let seleccion = prompt("¡Hola! ¿Quieres comprar algo para tu look ateneo hoy?")
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('carrito')){
+        carrito = JSON.parse(localStorage.getItem('carrito'))
+        actualizarCarrito()
+    }
+})
 
-while(seleccion != "si" && seleccion != "no"){
-    alert("por favor ingresa si o no")
-    seleccion = prompt("¡Hola ¿Quieres comprar algo para tu look ateneo hoy?")
-}
+botonVaciar.addEventListener('click', () => {
+    carrito.length = 0
+    actualizarCarrito()
+})
 
-if(seleccion == "si"){
-    alert("A continuación te mostramos nuestros productos para que armes tu outfit")
-    let catalogoProductos = productos.map((producto) => producto.nombre + " " + "$" + producto.precio);
-    alert(catalogoProductos.join(" - "))
-} 
-else if (seleccion == "no"){
-    alert("¡Gracias por venir, te esperamos de regreso pronto!")
-}
+//INYECTAR EL HTML
+stockProductos.forEach((producto) => {
+    const div = document.createElement('div')
+    div.classList.add('producto')
+    div.innerHTML = `
+    <img src=${producto.img} alt= "">
+    <h3>${producto.nombre}</h3>
+    <p>${producto.desc}</p>
+    <p class="precioProducto">Precio:$ ${producto.precio}</p>
+    <button id="agregar${producto.id}" class="boton-agregar">Agregar <i class="fas fa-shopping-cart"></i></button>
+    `
+    contenedorProductos.appendChild(div)
 
-while(seleccion != "no"){
-    let producto = prompt("Agrega un producto a tu carrito")
-    let precio = 0
+    const boton = document.getElementById(`agregar${producto.id}`)
 
-    if(producto == "top" || producto == "remera dama" || producto == "remera hombre"){
-        switch(producto) {
-            case "top":
-            precio = 2500
-            break;
-            case "remera dama":
-            precio = 2250
-            break;
-            case "remera hombre":
-            precio = 2300
-            break;
-        default:
-            break;
-        }
-    let unidades = parseInt(prompt("¿Cuántas unidades deseas llevar?"))
-    carrito.push({producto, unidades, precio})
-    console.log(carrito)
+    boton.addEventListener('click', () => {
+        agregarAlCarrito(producto.id)
+    })
+})
+
+
+const agregarAlCarrito = (prodId) => {
+
+    const existe = carrito.some (prod => prod.id === prodId)
+
+    if (existe){
+        const prod = carrito.map (prod => {
+            if (prod.id === prodId){
+                prod.cantidad++
+            }
+        })
     } else {
-        alert("No tenemos el producto que nos indicaste")
+        const item = stockProductos.find((prod) => prod.id === prodId)
+        carrito.push(item)
     }
 
-    seleccion = prompt("¿Deseas elegir más productos?")
-    while(seleccion == "no"){
-        alert("Gracias por tu compra, ¡que lo disfrutes!")
-        carrito.forEach((carritoFinal) => {
-            console.log(`producto: ${carritoFinal.producto}, unidades: ${carritoFinal.unidades}, total a pagar ${carritoFinal.unidades * carritoFinal.precio}`)
-        }) 
-    break;
-    }
+    actualizarCarrito()
 }
 
-const total = carrito.reduce((ecc, el) => acc + el.precio * el.unidades, 0)
-console.log(`El total a pagar por tu compra es: ${total}`)
+const eliminarDelCarrito = (prodId) => {
+    const item = carrito.find((prod) => prod.id === prodId)
+
+    const indice = carrito.indexOf(item)
+
+    carrito.splice(indice, 1) 
+    actualizarCarrito()
+    console.log(carrito)
+}
+
+const actualizarCarrito = () => {
+    contenedorCarrito.innerHTML = "" 
+    carrito.forEach((prod) => {
+        const div = document.createElement('div')
+        div.className = ('productoEnCarrito')
+        div.innerHTML = `
+        <p>${prod.nombre}</p>
+        <p>Precio:$${prod.precio}</p>
+        <p>Cantidad: <span id="cantidad">${prod.cantidad}</span></p>
+        <button onclick="eliminarDelCarrito(${prod.id})" class="boton-eliminar"><i class="fas fa-trash-alt"></i></button>
+        `
+
+        contenedorCarrito.appendChild(div)
+        
+        localStorage.setItem('carrito', JSON.stringify(carrito))
+
+    })
+    
+    contadorCarrito.innerText = carrito.length
+    
+    console.log(carrito)
+    precioTotal.innerText = carrito.reduce((acc, prod) => acc + prod.cantidad * prod.precio, 0)
+}
+
+const contenedorModal = document.getElementsByClassName('modal-contenedor')[0]
+const botonAbrir = document.getElementById('boton-carrito')
+const botonCerrar = document.getElementById('carritoCerrar')
+const modalCarrito = document.getElementsByClassName('modal-carrito')[0]
+
+
+botonAbrir.addEventListener('click', ()=>{
+    contenedorModal.classList.toggle('modal-active')
+})
+botonCerrar.addEventListener('click', ()=>{
+    contenedorModal.classList.toggle('modal-active')
+})
+
+contenedorModal.addEventListener('click', (event) =>{
+    contenedorModal.classList.toggle('modal-active')
+
+})
+modalCarrito.addEventListener('click', (event) => {
+    event.stopPropagation() 
+})
