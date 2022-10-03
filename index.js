@@ -95,10 +95,9 @@ const actualizarCarrito = () => {
         `
 
         contenedorCarrito.appendChild(div)
-        
-        localStorage.setItem('carrito', JSON.stringify(carrito))
-
     })
+
+    localStorage.setItem('carrito', JSON.stringify(carrito))
 
     contadorCarrito.innerText = carrito.length
     console.log(carrito)
