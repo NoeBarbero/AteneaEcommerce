@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
 botonVaciar.addEventListener('click', () => {
     carrito.length = 0
     actualizarCarrito()
+    Swal.fire('Carrito vaciado') /* libreria */
+
 })
 
 //INYECTO HTML
