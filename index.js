@@ -15,6 +15,7 @@ const contenedorProductos = document.getElementById('contenedor-productos')
 const contenedorCarrito = document.getElementById('carrito-contenedor')
 const botonVaciar = document.getElementById('vaciar-carrito')
 const contadorCarrito = document.getElementById('contadorCarrito')
+const botonPagar = document.getElementById('pagar-carrito')
 
 const cantidad = document.getElementById('cantidad')
 const precioTotal = document.getElementById('precioTotal')
@@ -32,6 +33,12 @@ botonVaciar.addEventListener('click', () => {
     carrito.length = 0
     actualizarCarrito()
     Swal.fire('Carrito vaciado') /* libreria usada para dar confirmación del vaciado del carrito */
+
+})
+botonPagar.addEventListener('click', () => {
+    carrito.length = 0
+    actualizarCarrito()
+    Swal.fire('Gracias por tu compra! Realizá tu transferencia al alias Atenea.Belleza y envia el comprobante al 03492 15606060, te responderemos de 8 a 16hs para coordinar tu turno!') /* libreria usada para pago del carrito */
 
 })
 
