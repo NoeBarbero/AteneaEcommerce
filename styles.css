@@ -13,6 +13,11 @@ img {
     margin-bottom: 10px;
     height: auto;
 }
+nav a {
+    text-decoration: none;
+    color: rgb(236, 65, 93);
+    font-weight: bold;
+}
 
 header {
     background-color: pink;
@@ -24,14 +29,20 @@ header {
     margin-bottom: 20px;
 }
 
-
-h1 {
-    color: rgb(236, 65, 93);
-    text-transform: uppercase;
-    font-weight: 700;
-    font-size: 30px;
+#container p {
+    line-height: 0.5;
 }
 
+header h1 {
+    color: rgb(236, 65, 93);
+    text-transform: uppercase;
+    font-weight: 1000;
+    font-size: 35px;
+}
+
+div h3 {
+    color: rgb(236, 65, 93);
+}
 
 #boton-carrito {
     border: none;
