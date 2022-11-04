@@ -122,11 +122,9 @@ fetch(url)
     .then(res => res.json())
     .then(data => {
         data.forEach(usuario => {
-            console.log(usuario.name)
             const p = document.createElement('p')
             p.innerHTML = usuario.name
             container.appendChild(p)
-        })
-        console.log(data)
+        });
     })
     .catch(err => console.log(err))
