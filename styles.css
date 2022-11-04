@@ -15,6 +15,7 @@ img {
 }
 
 header {
+    background-color: pink;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -59,9 +60,8 @@ h1 {
 }
 
 p {
-    line-height: 1.8;
+    line-height: 1.5;
 }
-
 
 .producto {
     max-width: 40%;
@@ -170,4 +170,8 @@ p {
 }
 .boton-eliminar:focus {
     outline: none;
+}
+
+.bg-propio {
+    background-color: pink;
 }
