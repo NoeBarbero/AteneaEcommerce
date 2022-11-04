@@ -30,6 +30,8 @@ h1 {
     font-weight: 700;
     font-size: 30px;
 }
+
+
 #boton-carrito {
     border: none;
     color: rgb(236, 65, 93);
@@ -59,6 +61,7 @@ h1 {
 p {
     line-height: 1.8;
 }
+
 
 .producto {
     max-width: 40%;
